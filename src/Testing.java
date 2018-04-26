@@ -10,9 +10,9 @@ import java.util.Set;
 public class Testing {
 	
 	private static final Character[] v = {'a','e','i','o','u','y'};
-	private static final Set<Character> VOWELS =
+	public static final Set<Character> VOWELS =
 		new HashSet<Character>(Arrays.asList(v));
-	private static final Set<Character> CONSONANTS = new HashSet<Character>();
+	public static final Set<Character> CONSONANTS = new HashSet<Character>();
 	static {
 		for(int i = 0; i < 26; ++i)
 			CONSONANTS.add((char) (97+i));
@@ -26,14 +26,14 @@ public class Testing {
 	{
 		for(int i = 0; i < 26; ++i) letters[i] = new LetterAssociation((char) (97+i));
 		createCommonMap();
-		try(PrintWriter nameMaker = new PrintWriter(new FileOutputStream("names_generated.txt",false)))
+		/*try(PrintWriter nameMaker = new PrintWriter(new FileOutputStream("names_generated.txt",false)))
 		{
 			for(int i = 0; i<9999; ++i)
 				nameMaker.println(run());
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 		for(int i = 0; i <10; ++i)
 			System.out.println(run());
 	}
@@ -63,18 +63,32 @@ public class Testing {
 				char nextLetter = ' ';
 				if(isVowel(letter))
 				{
-					do{nextLetter = e.getRandomAssociation();}
-					while(isVowel(nextLetter));
+					nextLetter = e.getRandomAssociation();
+					//do{nextLetter = e.getRandomAssociation();}
+					//while(isVowel(nextLetter) );
 				}
 				else
 				{
 					do{nextLetter = e.getRandomAssociation();}
-					while(!isVowel(nextLetter));
+					while(!isVowel(nextLetter) || isGoodFollower(letter,nextLetter));
 				}
 				return nextLetter;
 				}
 		}
 		return ' ';
+	}
+	
+	private boolean isGoodFollower(char letter, char next)
+	{
+		switch(letter)
+		{
+		case 's':
+			return next=='h' || next=='c' || next=='t' || next=='k' 
+			|| next=='w' || next=='p' || next=='l' || next=='n' || next=='m';
+		case 'c':
+			return next=='h' || next=='r' || next=='l';
+		default:return false;
+		}
 	}
 	
 	private static boolean isVowel(char d)

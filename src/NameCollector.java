@@ -9,7 +9,7 @@ public class NameCollector {
 	
 	public NameCollector()
 	{
-		try(Scanner reader = new Scanner(new File("names.txt")))
+		try(Scanner reader = new Scanner(new File("names2.txt")))
 		{
 			while(reader.hasNextLine())
 			{

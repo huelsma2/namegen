@@ -17,6 +17,8 @@ public class LetterAssociation {
 	
 	public char getRandomAssociation()
 	{
+		if(associations.size()==0)
+			return 'a';
 		return associations.get(new Random().nextInt(associations.size()));
 	}
 	
